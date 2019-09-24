@@ -13,9 +13,6 @@ pipeline {
           dockerfile {
             filename 'Dockerfile'
             dir 'php7.2-fpm'
-            label 'my-defined-label'
-            registryUrl 'https://myregistry.com/'
-            registryCredentialsId 'myPredefinedCredentialsInJenkins'
           }
       }
       steps {
