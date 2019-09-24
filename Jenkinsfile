@@ -9,8 +9,8 @@ pipeline {
   }
   stages {
     stage('Build Laravel') {
-      agent {
-        agent { dockerfile true }
+      docker {
+        image 'php:7.3.9-fpm-stretch'
       }
       steps {
         git(url: FRONTEND_GIT, branch: FRONTEND_BRANCH)
