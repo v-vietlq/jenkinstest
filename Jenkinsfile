@@ -6,15 +6,14 @@ pipeline {
     FRONTEND_IMAGE = 'vietawake/job-thom'
     FRONTEND_SERVER = '149.28.35.8'
     FRONTEND_SERVER_DIR = './jenkinstest'
-  }
   stages {
     stage('Build Laravel') {
-      docker {
-        image 'php:7.3.9-fpm-stretch'
+      agent {
+         agent { dockerfile true }
       }
       steps {
         git(url: FRONTEND_GIT, branch: FRONTEND_BRANCH)
-        sh 'docker build .'
+        sh 'docker-compose up --build -d'
         stash(name: 'frontend', includes: 'build/*/**')
       }
     }
