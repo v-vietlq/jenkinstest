@@ -1,11 +1,11 @@
 pipeline {
   agent any
   environment {
-    FRONTEND_GIT = 'https://gitlab.com/quoctuan9901/job-thom'
-    FRONTEND_BRANCH = 'vietawake'
+    FRONTEND_GIT = 'https://github.com/vietawake/jenkinstest'
+    FRONTEND_BRANCH = 'master'
     FRONTEND_IMAGE = 'vietawake/job-thom'
     FRONTEND_SERVER = '149.28.35.8'
-    FRONTEND_SERVER_DIR = './job-thom'
+    FRONTEND_SERVER_DIR = './jenkinstest'
   }
   stages {
     stage('Build Laravel') {
@@ -20,8 +20,7 @@ pipeline {
       }
       steps {
         git(url: FRONTEND_GIT, branch: FRONTEND_BRANCH)
-        sh 'npm i'
-        sh 'npm run build'
+        sh 'docker build .'
         stash(name: 'frontend', includes: 'build/*/**')
       }
     }
