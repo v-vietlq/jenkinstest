@@ -10,10 +10,7 @@ pipeline {
   stages {
     stage('Build Laravel') {
       agent {
-          dockerfile {
-            filename 'Dockerfile'
-            dir 'php7.2-fpm'
-          }
+        agent { dockerfile true }
       }
       steps {
         git(url: FRONTEND_GIT, branch: FRONTEND_BRANCH)
