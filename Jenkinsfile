@@ -13,7 +13,7 @@ pipeline {
       }
       steps {
         git(url: FRONTEND_GIT, branch: FRONTEND_BRANCH)
-        sh 'docker-compose up --build -d'
+        sh 'docker-compose up -d'
         stash(name: 'frontend', includes: 'build/*/**')
       }
     }
