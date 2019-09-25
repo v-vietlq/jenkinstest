@@ -1,53 +1,27 @@
-pipeline {
-  agent any
-  environment {
-    FRONTEND_GIT = 'https://github.com/vietawake/jenkinstest'
-    FRONTEND_BRANCH = 'master'
-    FRONTEND_IMAGE = 'vietawake/job-thom'
-    FRONTEND_SERVER = '149.28.35.8'
-    FRONTEND_SERVER_DIR = './jenkinstest'
-  stages {
-    stage('Build Laravel') {
-      agent {
-         agent { dockerfile true }
-      }
-      steps {
-        git(url: FRONTEND_GIT, branch: FRONTEND_BRANCH)
-        sh 'docker-compose up -d'
-        stash(name: 'frontend', includes: 'build/*/**')
-      }
-    }
-    stage('Build Image') {
-      steps {
-        unstash 'frontend'
-        script {
-          docker.withRegistry('', 'docker-hub') {
-            def image = docker.build(FRONTEND_IMAGE)
-            image.push(BUILD_ID)
-          }
-        }
-      }
-    }
-    stage('Deploy') {
-      steps {
-        script {
-          withCredentials([sshUserPrivateKey(
-            credentialsId: 'ssh',
-            keyFileVariable: 'identityFile',
-            passphraseVariable: '',
-            usernameVariable: 'user'
-          )]) {
-            def remote = [:]
-            remote.name = 'server'
-            remote.host = FRONTEND_SERVER
-            remote.user = user
-            remote.identityFile = identityFile
-            remote.allowAnyHosts = true
+node ('slave'){ // run trên node có label là slave
+    checkout scm
 
-            sshCommand remote: remote, command: "cd $FRONTEND_SERVER_DIR && export FRONTEND_IMAGE=$FRONTEND_IMAGE:$BUILD_ID && docker-compose up -d"
-          }
-        }
-      }
+    stage('Build') {
+        checkout scm
+        sh 'pwd && /usr/local/bin/composer install'
+        docker.build("nginx")
+        docker.build("php:7.3.9-fpm-stretch")
     }
-  }
+
+    stage('Test') {
+        docker.image('php:7.3.9-fpm-stretch').inside {
+            sh 'php --version'
+            sh 'cd /var/www/html && ./vendor/bin/phpunit --testsuite Unit'
+        }
+    }
+
+    stage('Deploy') {
+        sh '/usr/local/bin/docker-compose down'
+        sh '/usr/local/bin/docker-compose up -d'
+        sh 'sleep 10 && /usr/local/bin/docker-compose run web php artisan migrate'
+    }
+
+    stage ('Test Feature') {
+        sh '/usr/local/bin/docker-compose run web ./vendor/bin/phpunit --testsuite Feature'
+    }
 }
