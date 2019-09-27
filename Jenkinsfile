@@ -3,9 +3,9 @@ node ('slave'){ // run trên node có label là slave
 
     stage('Build') {
         checkout scm
-        sh 'pwd && /usr/local/bin/composer install'
-        docker.build("nginx")
-        docker.build("php:7.3.9-fpm-stretch")
+        sh "composer install"
+        sh "cp .env.example .env"
+        sh "php artisan key:generate"
     }
 
     stage('Test') {
