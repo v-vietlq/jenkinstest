@@ -1,4 +1,4 @@
-node ('slave'){ // run trên node có label là slave
+node ('master'){ // run trên node có label là slave
     checkout scm
 
     stage('Build') {
