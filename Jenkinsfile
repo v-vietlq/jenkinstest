@@ -2,7 +2,9 @@ node ('master'){
     checkout scm
 
     stage('Build') {
-        sh "docker-compose -v"
+        sh "curl -fsSL https://get.docker.com -o get-docker.sh"
+        sh "get-docker.sh"
+        sh "apt install docker-compose"
         sh "docker-compose up -d"
         sh "composer install"
         sh "cp .env.example .env"
