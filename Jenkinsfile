@@ -3,6 +3,7 @@ node ('master'){
 
     stage('Build') {
         checkout scm
+        sh "docker-compose -v"
         sh "docker-compose up -d"
         sh "composer install"
         sh "cp .env.example .env"
