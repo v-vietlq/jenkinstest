@@ -2,7 +2,6 @@ node ('master'){
     checkout scm
 
     stage('Build') {
-        checkout scm
         sh "docker-compose -v"
         sh "docker-compose up -d"
         sh "composer install"
