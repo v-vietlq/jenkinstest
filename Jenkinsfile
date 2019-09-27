@@ -1,18 +1,16 @@
-node ('master'){ // run trên node có label là slave
+node ('master'){
     checkout scm
 
     stage('Build') {
         checkout scm
+        sh "docker-compose up -d"
         sh "composer install"
         sh "cp .env.example .env"
         sh "php artisan key:generate"
     }
 
     stage('Test') {
-        docker.image('php:7.3.9-fpm-stretch').inside {
-            sh 'php --version'
-            sh 'cd /var/www/html && ./vendor/bin/phpunit --testsuite Unit'
-        }
+        echo "testing success"
     }
 
     stage('Deploy') {
