@@ -15,19 +15,19 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh './jenkins/test/test.sh'
+                sh 'sudo bash ./jenkins/test/test.sh'
             }
         }
 
         stage('Push') {
             steps {
-                sh './jenkins/push/push.sh'
+                sh 'sudo bash ./jenkins/push/push.sh'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh './jenkins/deploy/deploy.sh'
+                sh 'sudo bash ./jenkins/deploy/deploy.sh'
             }
         }
     }
