@@ -1,25 +1,38 @@
-node ('master'){
-    checkout scm
+pipeline {
 
-    stage('Build') {
-        sh "sudo apt install docker-compose"
-        sh "docker-compose up -d"
-        sh "composer install"
-        sh "cp .env.example .env"
-        sh "php artisan key:generate"
+    agent any
+    environment {
+        PASS = credentials('register-pass') 
     }
 
-    stage('Test') {
-        echo "testing success"
-    }
+    stages {
 
-    stage('Deploy') {
-        sh '/usr/local/bin/docker-compose down'
-        sh '/usr/local/bin/docker-compose up -d'
-        sh 'sleep 10 && /usr/local/bin/docker-compose run web php artisan migrate'
-    }
+        stage('Build.') {
+            steps {
+                sh '''
+                    ./jenkins/build/mvn.sh mvn -B -DskipTests clean package
+                    ./jenkins/build/build.sh
 
-    stage ('Test Feature') {
-        sh '/usr/local/bin/docker-compose run web ./vendor/bin/phpunit --testsuite Feature'
+                '''
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh './jenkins/test/mvn.sh mvn test'
+            }
+        }
+
+        stage('Push') {
+            steps {
+                sh './jenkins/push/push.sh'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh './jenkins/deploy/deploy.sh'
+            }
+        }
     }
 }
