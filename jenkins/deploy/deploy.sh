@@ -1,7 +1,8 @@
 #!/bin/bash
 
 echo laravelapp_php > /tmp/.auth
-echo $BUILD_TAG >> /tmp/.auth
+echo nginx:alpine > /tmp/.auth
+echo phpmyadmin > /tmp/.auth
 
 
 scp -i /opt/prod /tmp/.auth root@144.202.3.128:/tmp/.auth
