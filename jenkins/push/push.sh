@@ -7,7 +7,7 @@ echo "********************"
 IMAGE="laravelapp_php"
 TAG="latest"
 echo "** Logging in ***"
-sudo docker login -u vietawake -p $PASS
+sudo docker login -u vietawake -p khongbiet1
 echo "*** Tagging image ***"
 sudo docker tag $IMAGE:$TAG vietawake/$IMAGE:50
 echo "*** Pushing image ***"
