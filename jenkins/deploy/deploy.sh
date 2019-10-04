@@ -1,8 +1,7 @@
 #!/bin/bash
 
-echo "laravelapp_php\n" > /tmp/.auth
-echo "nginx:alpine\n" > /tmp/.auth
-echo "phpmyadmin\n" > /tmp/.auth
+echo -e "laravelapp_php\nnginx:alpine\nphpmyadmin" > /tmp/.auth
+
 
 
 scp -i /opt/prod /tmp/.auth root@144.202.3.128:/tmp/.auth
