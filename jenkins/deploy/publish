@@ -6,7 +6,3 @@ export IMAGE_PHP=$(sed -n '2p' /tmp/.auth)
 
 docker login -u vietawake -p khongbiet1
 cd ~/laravel-app && docker-compose up -d
-docker-compose run --rm php composer install
-docker-compose run --rm php cp .env.example .env
-docker-compose run --rm php php artisan key:generate
-docker-compose run --rm php chmod 777 -R storage bootstrap
