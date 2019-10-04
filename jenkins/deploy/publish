@@ -5,4 +5,4 @@ export IMAGE_NGINX=$(sed -n '2p' /tmp/.auth)
 export IMAGE_PHP=$(sed -n '2p' /tmp/.auth)
 
 docker login -u vietawake -p khongbiet1
-cd ~/laravel && docker-compose up -d
+cd ~/laravel-app && docker-compose up -d
