@@ -9,6 +9,6 @@ TAG="latest"
 echo "** Logging in ***"
 sudo docker login -u vietawake -p $PASS
 echo "*** Tagging image ***"
-sudo docker tag $IMAGE:$TAG vietawake/$IMAGE:$BUILD_TAG
+sudo docker tag $IMAGE:$TAG vietawake/$IMAGE:50
 echo "*** Pushing image ***"
-sudo docker push vietawake/$IMAGE:$BUILD_TAG
+sudo docker push vietawake/$IMAGE:50
