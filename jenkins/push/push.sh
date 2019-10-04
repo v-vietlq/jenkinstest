@@ -4,7 +4,7 @@ echo "********************"
 echo "** Pushing image ***"
 echo "********************"
 
-IMAGE="laravel-app_php"
+IMAGE="laravelapp_php"
 
 echo "** Logging in ***"
 docker login -u vietawake -p $PASS
