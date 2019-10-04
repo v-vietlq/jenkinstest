@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo laravel-app_php > /tmp/.auth
-echo $PASS >> /tmp/.auth
+echo laravelapp_php > /tmp/.auth
+echo $BUILD_TAG >> /tmp/.auth
 
 
 scp -i /opt/prod /tmp/.auth root@144.202.3.128:/tmp/.auth
