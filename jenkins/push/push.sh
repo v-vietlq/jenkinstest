@@ -4,11 +4,11 @@ echo "********************"
 echo "** Pushing image ***"
 echo "********************"
 
-IMAGE="maven-project"
+IMAGE="laravel-app_php"
 
 echo "** Logging in ***"
 docker login -u vietawake -p $PASS
 echo "*** Tagging image ***"
-docker tag $IMAGE:$BUILD_TAG vietawake/$IMAGE:$BUILD_TAG
+docker tag $IMAGE vietawake/$IMAGE
 echo "*** Pushing image ***"
-docker push vietawake/$IMAGE:$BUILD_TAG
+docker push vietawake/$IMAGE
