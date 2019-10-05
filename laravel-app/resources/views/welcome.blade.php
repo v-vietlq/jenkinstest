@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel OK 
+                    Laravel SumCoffee 
                 </div>
 
                 <div class="links">
