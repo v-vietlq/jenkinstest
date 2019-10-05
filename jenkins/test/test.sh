@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo 'testing ok'
+vendor/bin/phpunit --filter testBasicTestABC
